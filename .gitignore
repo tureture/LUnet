@@ -1,0 +1,49 @@
+# --- Project ---
+outputs/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Virtual environments ---
+.venv/
+venv/
+ENV/
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Testing / Coverage ---
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# --- Weights & Biases ---
+wandb/
+
+# --- Distribution / Packaging ---
+*.whl
+*.tar.gz

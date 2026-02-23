@@ -1,0 +1,68 @@
+# =============================================================================
+# LUnet Training Configuration
+# =============================================================================
+
+experiment:
+  name: "lunet_experiment_003"
+  seed: 42
+  output_dir: "outputs"
+
+model:
+  # See configs/ for architecture-specific config files.
+  # Append _Nf to set base filter count, e.g. "lunet_small_4f".
+  # Small (5-level, 2 conv/block): unet_small_Nf, lunet_small_Nf  (N = 4, 3, 2, 1)
+  # Large (4-level, 3 conv/block): unet_large_Nf, lunet_large_Nf  (N = 24, 12, 6)
+  # UNet++ / LUNet++ variants use the "unetpp_" / "lunetpp_" prefix.
+  # Also available: mednext_small
+  architecture: "lunet_small_4f"
+  in_channels: 1
+  out_channels: 1
+  drop_prob: 0.005
+
+data:
+  dataset: "harp"           # Dataset name (registered in data/dataset.py)
+  train_dir: "/path/to/your/train_data"
+  val_dir: "/path/to/your/val_data"
+  num_workers: 8
+  pin_memory: true
+  persistent_workers: true
+
+training:
+  epochs: 10000
+  batch_size: 16
+  optimizer: "adam"          # "adam" | "adamw"
+  learning_rate: 1.0e-2
+  weight_decay: 1.0e-5       # Only used with adamw
+  scheduler: "none"          # "cosine" | "step" | "none"
+  scheduler_step_size: 30    # For StepLR
+  scheduler_gamma: 0.1       # For StepLR
+  log_interval: 100          # Save predictions every N steps
+
+  loss:
+    name: "dice"            # "dice" | "bce" | "dice_bce"
+    dice_weight: 1.0
+    bce_weight: 1.0
+
+  checkpoint:
+    save_every: 100         # Save checkpoint every N epochs
+    keep_best: true
+
+evaluation:
+  metrics: ["dice", "hausdorff95"]
+
+benchmark:
+  enabled: true
+  warmup_runs: 5
+  timed_runs: 20
+  input_size: [1, 1, 64, 64, 64]  # [B, C, D, H, W]
+
+visualization:
+  plot_training_curves: true
+  plot_slices: true
+  slice_axis: 2             # 0=sagittal, 1=coronal, 2=axial
+  num_samples: 4
+
+wandb:
+  enabled: true
+  project: "lunet"
+  mode: "online"            # "online" | "offline" | "disabled"

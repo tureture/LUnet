@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lunet-dev"
+version = "0.1.0"
+description = "3D U-Net training framework for volumetric segmentation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pyyaml>=6.0",
+    "matplotlib>=3.7",
+    "pynrrd>=1.0",
+    "calflops>=0.2",
+]
+
+[tool.setuptools.packages.find]
+include = ["data*", "models*", "training*", "evaluation*", "visualization*", "utils*"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1",
+]
+
